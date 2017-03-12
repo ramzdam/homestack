@@ -34,10 +34,16 @@ class Dashboard extends CI_Controller {
     public function getList()
     {
 
-        $list = GuzzleService::sendGet('user/list');
+        $items = GuzzleService::sendGet('user/list');
+        if ($items['success']) {
+            $items = $items['data'];
+        }
 
-        var_dump($list);exit;
+        $this->load->view('partials/list', compact('items'));
+
     }
+
+    
 }
 
 /* End of file welcome.php */

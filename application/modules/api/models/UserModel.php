@@ -14,7 +14,7 @@ class UserModel extends CI_Model
     {
         $result = $this->db
             ->from($this->table)
-            ->where('deleted_at !=', 'NULL')
+            ->where('deleted_at', NULL)
             ->get()
             ->result();
 

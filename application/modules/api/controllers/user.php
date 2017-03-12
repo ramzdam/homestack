@@ -45,8 +45,10 @@ class User extends Apicontroller {
 
     public function list_get()
     {
+
         $list = $this->model_repository->get();
-        $this->response(['data' => $list, 'success' => true], 200);
+
+        $this->response(['data' => $list, 'success' => true]);
     }
 }
 

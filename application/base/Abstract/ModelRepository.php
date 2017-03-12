@@ -38,7 +38,7 @@ abstract class ModelRepository implements IModelRepository
         // TODO: Implement update() method.
     }
 
-    public function save()
+    public function save($params)
     {
         return $this->getModel()->add($params);
     }
