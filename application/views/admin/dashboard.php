@@ -350,9 +350,9 @@
                     </a>
                 </li>
                 <li>
-                    <a class="" href="chart-chartjs.html">
+                    <a class="" href="/dashboard/migrate">
                         <i class="icon_piechart"></i>
-                        <span>Charts</span>
+                        <span>Migrate</span>
 
                     </a>
 
