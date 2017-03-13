@@ -38,7 +38,10 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "dashboard";
+$route['api/user/(:num)'] = "api/user/index/$1";
+$route['api/user/(:num)/update'] = "api/user/update/$1";
+$route['api/user/(:num)/delete'] = "api/user/delete/$1";
 $route['404_override'] = '';
 
 

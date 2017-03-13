@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Sample admin panel">
     <meta name="author" content="Madzmar">
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>resources/img/favicon.png">
 
     <title>Homestack Admin</title>
 
     <!-- Bootstrap CSS -->
     <link href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" rel="stylesheet">
     <link rel = "stylesheet" type = "text/css" href = "<?php echo base_url(); ?>resources/css/style.css">
-    <script type = 'text/javascript' src = "<?php echo base_url(); ?>resources/js/sample.js"></script>
+
 
     <!-- bootstrap theme -->
     <link href="<?php echo base_url(); ?>resources/css/bootstrap-theme.css" rel="stylesheet">
@@ -54,7 +53,7 @@
         </div>
 
         <!--logo start-->
-        <a href="index.html" class="logo">Nice <span class="lite">Admin</span></a>
+        <a href="index.html" class="logo">Home<span class="lite">Stack</span></a>
         <!--logo end-->
 
         <div class="nav search-row" id="top_menu">
@@ -273,9 +272,9 @@
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
-                                <img alt="" src="<?php echo base_url(); ?>resources/img/avatar1_small.jpg">
+                                <img alt="" src="<?php echo base_url(); ?>resources/img/avatar_1.jpg" width="30px">
                             </span>
-                        <span class="username">Jenifer Smith</span>
+                        <span class="username">Madzmar Ullang</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
@@ -407,7 +406,7 @@
                             </div>
                         </div>
                         <div class="panel-body" id="content_list">
-
+                            <?php echo $list; ?>
                         </div>
 
                     </div>
@@ -426,28 +425,31 @@
                         <div class="panel-body">
                             <div class="padd">
 
+                                 <div><?php echo $this->session->flashdata('errors'); ?></div>
+
                                 <div class="form quick-post">
                                     <!-- Edit profile form (not working)-->
-                                    <form class="form-horizontal">
+                                    <?php echo form_open("/dashboard/add", array('id' => 'user_form', 'class' => 'form-horizontal')); ?>
+                                        <input type="hidden" id="id" name="id" value="" />
                                         <!-- Title -->
                                         <div class="form-group">
-                                            <label class="control-label col-lg-2" for="title">Name</label>
+                                            <label class="control-label col-lg-2" for="name">Name</label>
                                             <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="name">
+                                                <input type="text" class="form-control" name="name" id="name">
                                             </div>
                                         </div>
                                         <!-- Content -->
                                         <div class="form-group">
-                                            <label class="control-label col-lg-2" for="content">Email</label>
+                                            <label class="control-label col-lg-2" for="email">Email</label>
                                             <div class="col-lg-10">
-                                                <input type="email" class="form-control" id="email" />
+                                                <input type="email" class="form-control" name="email" id="email" />
                                             </div>
                                         </div>
                                         <!-- Cateogry -->
                                         <div class="form-group">
-                                            <label class="control-label col-lg-2">Url</label>
+                                            <label class="control-label col-lg-2" for="link">Url</label>
                                             <div class="col-lg-10">
-                                                <input type="url" class="form-control" id="url" />
+                                                <input type="url" class="form-control" name="link" id="link" />
                                             </div>
                                         </div>
 
@@ -455,11 +457,11 @@
                                         <div class="form-group">
                                             <!-- Buttons -->
                                             <div class="col-lg-offset-2 col-lg-9">
-                                                <button type="submit" class="btn btn-primary">Save</button>
-                                                <button type="reset" class="btn btn-default">Cancel</button>
+                                                <button type="submit" id="save" class="btn btn-primary">Save</button>
+                                                <button type="reset" id="cancel" class="btn btn-default">Clear/New</button>
                                             </div>
                                         </div>
-                                    </form>
+                                    <?php echo form_close(); ?>
                                 </div>
 
 
@@ -544,40 +546,35 @@
 
     //carousel
     $(document).ready(function() {
-        $("#owl-slider").owlCarousel({
-            navigation : true,
-            slideSpeed : 300,
-            paginationSpeed : 400,
-            singleItem : true
+
+        $(".edit").on('click', function() {
+            id = $(this).attr('user-id');
+
+            $.ajax({
+                url: '/dashboard/user/' + id,
+                type: 'get',
+                dataType: 'json',
+                success: function (response) {
+
+                    $('#name').val(response.data.name);
+                    $('#id').val(response.data.id);
+                    $('#email').val(response.data.email);
+                    $('#link').val(response.data.link);
+                }
+
+            });
 
         });
 
-        $('#content_list').load('dashboard/getList');
-    });
+        $("#cancel").on('click', function() {
+            $("#id").val('');
+        });
 
-    //custom select box
-
-    $(function(){
-        $('select.styled').customSelect();
-    });
-
-    /* ---------- Map ---------- */
-    $(function(){
-        $('#map').vectorMap({
-            map: 'world_mill_en',
-            series: {
-                regions: [{
-                    values: gdpData,
-                    scale: ['#000', '#000'],
-                    normalizeFunction: 'polynomial'
-                }]
-            },
-            backgroundColor: '#eef3f7',
-            onLabelShow: function(e, el, code){
-                el.html(el.html()+' (GDP - '+gdpData[code]+')');
-            }
+        $(".delete").on('click', function() {
+            return confirm("Are you sure you want to delete?");
         });
     });
+
 
 </script>
 

@@ -8,6 +8,7 @@
  */
 class UserRepository extends ModelRepository
 {
+    // This will be the model class to be loaded by the modelrepository
     public $model_name = 'UserModel';
 
 }

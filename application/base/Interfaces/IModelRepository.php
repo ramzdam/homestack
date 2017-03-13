@@ -11,6 +11,6 @@ interface IModelRepository
     public function getModel();
     public function getByUid($uid);
     public function get();
-    public function update();
+    public function update($params, $id);
     public function save($params);
 }
