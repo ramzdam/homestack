@@ -12,8 +12,6 @@
 class GuzzleService
 {
     private $client;
-    // TODO: This should not be but should be inside a config or .env files
-    private static $api_url = 'http://homestack/api/';
 
     /**
      * Send a get request to the API server
@@ -61,7 +59,7 @@ class GuzzleService
     protected static function send($type, $url, $params)
     {
         $client = new \GuzzleHttp\Client();
-        $api = self::$api_url . $url;
+        $api = base_url('api') . '/' . $url;
 
         if ($type == 'post' || $type == 'put' || $type == 'patch') {
 
