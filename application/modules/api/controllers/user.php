@@ -52,7 +52,7 @@ class User extends Apicontroller
      *      "message" : "Record found"
      * }
      */
-	public function store_upost()
+	public function store_post()
     {
         try {
             $is_added = $this->model_repository->save($this->post());
